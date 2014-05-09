@@ -26,6 +26,8 @@ object File {
 }
 
 object Directory {
+  def apply(source : String) = Directory(new JFile(source))
+
   def apply(source : JFile) = new Directory {
     override def name: String = source.getName
 
@@ -35,12 +37,15 @@ object Directory {
 
 object Entry {
 
+  def write(to : String) {
+    // TODO
+  }
+
   def apply(file : JFile) : Entry =
     if (file.isDirectory) Directory(file)
     else File(file)
 
   def apply(path : String) = Entry(new JFile(path))
 }
-
 
 
