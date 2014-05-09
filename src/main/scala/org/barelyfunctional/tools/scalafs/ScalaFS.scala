@@ -13,6 +13,8 @@ trait File extends Entry {
 
 trait Directory extends Entry {
   def list : List[Entry]
+
+  def addFile(path : List[String], content : Array[Byte]) : Directory
 }
 
 object File {
@@ -26,12 +28,14 @@ object File {
 }
 
 object Directory {
-  def apply(source : String) = Directory(new JFile(source))
+  def apply(source : String) : Directory = Directory(new JFile(source))
 
   def apply(source : JFile) = new Directory {
     override def name: String = source.getName
 
     override def list: List[Entry] = source.listFiles.toList.map(Entry.apply(_))
+
+    override def addFile(path: List[String], content: Array[Byte]): Directory = ???
   }
 }
 
@@ -45,7 +49,6 @@ object Entry {
     if (file.isDirectory) Directory(file)
     else File(file)
 
-  def apply(path : String) = Entry(new JFile(path))
+  def apply(path : String) : Entry = Entry(new JFile(path))
 }
-
 
